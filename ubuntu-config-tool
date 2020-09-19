@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import argparse
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Ubuntu config tool')
+    parser.add_argument('-c', required=True, dest='config_file_path',help="Path to the config yaml file")
+
+    args = parser.parse_args()
+    print(args.config_file_path)

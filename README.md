@@ -77,4 +77,4 @@ Run `./bootstrap.sh` to install any packages required by the tool itself, and th
 
 ## Usage
 
-To use this tool, simply run: `ubuntu-config-tool -e <your yaml config file>` and the config tool will take care of installing services as necessary.
+To use this tool, simply run: `ubuntu-config-tool -c <your yaml config file>` and the config tool will take care of installing services as necessary.
