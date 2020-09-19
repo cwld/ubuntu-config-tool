@@ -17,13 +17,13 @@ packages:
 
 files:
   - <name>:
-     source: <relative or absolute path to copy files from>
-     destination: <relative or absolute path to copy files to>
-     requiresRestart <true if service must be restarted on update, false if restart not required>
-     access:
-       owner: <destination file(s) owner>
-       group: <destination file(s) group>
-       mode: <destination file(s) mode in octal format>
+      source: <relative or absolute path to copy files from>
+      destination: <relative or absolute path to copy files to>
+      requiresRestart <true if service must be restarted on update, false if restart not required>
+      access:
+        owner: <destination file(s) owner>
+        group: <destination file(s) group>
+        mode: <destination file(s) mode in octal format>
 
 service:
   startCommand: <command used to start the service>

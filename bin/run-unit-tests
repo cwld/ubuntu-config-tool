@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker build --target tests -t ubuntu-config-tool-unit-tests .
+docker run --rm -it ubuntu-config-tool-unit-tests
