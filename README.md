@@ -44,10 +44,12 @@ packages:
 ...
 ```
 Note, package installation will not restart the service as it is assumed that would be done by the package installer if necessary.
+Package management is optional, and either install/remove can be specified or both.
 
 ### Files
 
 The files section in the configuration will indicate which files to copy. The files may be a path (folder) in which case the copy will be recursive, or can be single files.
+If the service needs to be restarted when files are updated, set `requiresRestart: true`, and this will indicate to the tool to force a restart of the service.
 All options must be specified for each file, and you must take care to ensure that paths are not duplicated as order is not guaranteed and files will be overwritten if existing.
 For example, if you wanted to overwrite the default nginx index file with your own in a local www directory and have it owned by www-data with read only permissions, your config would look like this:
 ```
@@ -63,13 +65,22 @@ files:
         mode: 444
 ...
 ```
+File copy is optional, omit this if not required, however if needed then all parameters are mandatory
 
 ### Service
 
 This service section in the configuration indicates how the service is to be run and restarted. This should be an sh command that can be executed and returns within a reasonable (ie must control a daemonset).
 The start command should not restart the service if called when the service is running, and should simply return, as this will be called every time the config tool is run.
 The restart command will restart the service if any files marked as 'requiresRestart: true' are updated.
-If the systemd (or upstart, depending on the version of debian) file is not created during package install, you can write your own and use the files section to copy it to the relevant areai.
+For example, if you wanted to launch nginx, your config would look like this:
+```
+...
+service:
+  startCommand: 'service nginx start'
+  restartCommand: 'service nginx restart'
+```
+If the systemd (or upstart, depending on the version of debian) file is not created during package install, you can write your own and use the files section to copy it to the relevant area.
+Service control is optional, omit this if you do not want the service to be started/restarted, however if needed then all parameters are mandatory.
 
 ## Installation
 
@@ -78,3 +89,4 @@ Run `./bootstrap.sh` to install any packages required by the tool itself, and th
 ## Usage
 
 To use this tool, simply run: `ubuntu-config-tool -c <your yaml config file>` and the config tool will take care of installing services as necessary.
+Installing/removing packages will be processed first, followed by copying and updating files, and then the service will be started or restarted.
