@@ -10,4 +10,4 @@ ENTRYPOINT ["./ubuntu-config-tool"]
 
 FROM build as tests
 ENV PYTHONPATH="/app"
-CMD python3 -m unittest tests/*
+ENTRYPOINT python3 -m unittest tests/*

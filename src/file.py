@@ -6,8 +6,6 @@ from grp import getgrgid
 from pwd import getpwuid
 from hashlib import md5
 
-## Class to copy files
-
 class FileCopier:
   _files = []
   _files_modified = False

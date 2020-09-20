@@ -1,8 +1,6 @@
 import apt
 import logging
 
-## Class for installing and removing apt packages
-
 class PackageInstaller:
   _cache = {}
   _install_list = []

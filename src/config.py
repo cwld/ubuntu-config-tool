@@ -1,7 +1,5 @@
 import yaml
 
-## Data classes representing the configuration
-
 class FileCopyConfig:
   FILE_ACCESS_ROOT="access"
   FILE_ACCESS_OWNER="owner"

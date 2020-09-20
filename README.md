@@ -87,8 +87,20 @@ To use this tool, simply run: `ubuntu-config-tool -c <your yaml config file>` an
 Installing/removing packages will be processed first, followed by copying and updating files, and then the service will be started or restarted.
 Note, this tool must be run as root!
 
+## Tests
+
+A dockerfile is  provided which can be used to run unit tests and to do a test build using your config (using ubuntu 14.04 as the base image).
+
+To run unit tests, run `bin/run-unit-tests`
+
+To run a test build using your config, place your config and any files needed within the root folder of the repository, and then run `bin/run-test-build -c <relative path to your config file>`.
+
 ## Limitations and improvements
 
 This tool is still in early development and has a few limitations and improvements that could be made:
 * Config yaml is not fully validated
-
+* There is no support for symlinks or removing files
+* There is no support for running any extra commands for installation (although these can be added to the start/restart commands as a workaround)
+* Code does not have full test coverage, only the config classes are tested
+* This tool has only been tested on ubuntu 14.04, however it should run on newer versions as well
+* The tool has not been packaged up nicely and is required to be run with at least the src directory
