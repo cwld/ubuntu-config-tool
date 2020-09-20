@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+docker build --target build -t ubuntu-config-tool-build .
+docker run --rm -it ubuntu-config-tool-build $@

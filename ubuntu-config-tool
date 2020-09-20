@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+import argparse
+import logging
+from os import system as runsyscall
+from src.config import InstallConfig
+from src.package import PackageInstaller
+from src.file import FileCopier
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    parser = argparse.ArgumentParser(description='Ubuntu config tool')
+    parser.add_argument('-c', required=True, dest='config_file',help="Path to the config yaml file", type=argparse.FileType('r'))
+    args = parser.parse_args()
+    
+    logging.info('Loading config file...')
+    config = InstallConfig(args.config_file.read())
+    args.config_file.close()
+
+    logging.info('Installing packages...')
+    pkg_install = PackageInstaller(config.get_install_packages(), config.get_remove_packages())
+    if not pkg_install.install_remove_packages():
+      logging.error('Package installation failed, aborting')
+      exit(1)
+    
+    logging.info('Copying files...')
+    cp_files = FileCopier(config.get_files())
+    if not cp_files.copy_files():
+      logging.error('File copy failed, aborting')
+      exit(1)
+
+    if cp_files.files_modified() or pkg_install.packages_modified():
+      logging.info('Changes made, restarting service...')
+      retval = runsyscall(config.get_restart_cmd())
+      if retval != 0:
+        logging.error('Failed to restart process with error ' + str(retval) + ', aborting')
+        exit(1)
+    else:
+      logging.info('No changes made, ensuring service is started...')
+      retval = runsyscall(config.get_start_cmd())
+      if retval != 0:
+        logging.error('Failed to start process with error ' + str(retval) + ', aborting')
+        exit(1)

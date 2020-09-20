@@ -1,0 +1,26 @@
+---
+packages:
+  install:
+    - apache2
+    - php5
+    - libapache2-mod-php5
+  remove:
+    - nginx
+files:
+  - php-demo:
+      source: php-conf/index.html
+      destination: /var/www/html/index.html
+      access:
+        owner: www-data
+        group: www-data
+        mode: 644
+  - php-config:
+      source: php-conf/000-default.conf
+      destination: /etc/apache2/sites-available/000-default.conf
+      access:
+        owner: root
+        group: root
+        mode: 644
+service:
+  startCommand: 'service apache2 start'
+  restartCommand: 'service apache2 restart'
