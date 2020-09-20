@@ -17,13 +17,12 @@ packages:
 
 files:
   - <name>:
-      source: <relative or absolute path to copy files from>
-      destination: <relative or absolute path to copy files to>
-      requiresRestart <true if service must be restarted on update, false if restart not required>
+      source: <relative or absolute path to copy file from>
+      destination: <relative or absolute path to copy file to>
       access:
-        owner: <destination file(s) owner>
-        group: <destination file(s) group>
-        mode: <destination file(s) mode in octal format>
+        owner: <destination file owner>
+        group: <destination file group>
+        mode: <destination file mode in octal format>
 
 service:
   startCommand: <command used to start the service>
@@ -48,8 +47,7 @@ Package management is optional, and either install/remove can be specified or bo
 
 ### Files
 
-The files section in the configuration will indicate which files to copy. The files may be a path (folder) in which case the copy will be recursive, or can be single files.
-All options must be specified for each file, and you must take care to ensure that paths are not duplicated as order is not guaranteed and files will be overwritten if existing.
+The files section in the configuration will indicate which files to copy. At this stage only single files in each 'file' definition are supported.
 For example, if you wanted to overwrite the default nginx index file with your own in a local www directory and have it owned by www-data with read only permissions, your config would look like this:
 ```
 ...
@@ -87,3 +85,10 @@ Run `./bootstrap.sh` to install any packages required by the tool itself, and th
 
 To use this tool, simply run: `ubuntu-config-tool -c <your yaml config file>` and the config tool will take care of installing services as necessary.
 Installing/removing packages will be processed first, followed by copying and updating files, and then the service will be started or restarted.
+Note, this tool must be run as root!
+
+## Limitations and improvements
+
+This tool is still in early development and has a few limitations and improvements that could be made:
+* Config yaml is not fully validated
+

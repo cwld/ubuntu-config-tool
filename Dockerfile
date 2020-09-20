@@ -6,6 +6,7 @@ FROM base as build
 COPY ./bootstrap.sh /app
 RUN ./bootstrap.sh
 COPY . /app
+ENTRYPOINT ["./ubuntu-config-tool"]
 
 FROM build as tests
 ENV PYTHONPATH="/app"
