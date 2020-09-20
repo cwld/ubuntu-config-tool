@@ -10,8 +10,6 @@ class TestConfig(unittest.TestCase):
       raise self.failureException(msg)
     if file1.get_dest() != file2.get_dest():
       raise self.failureException(msg)
-    if file1.get_restart() != file2.get_restart():
-      raise self.failureException(msg)
     if file1.get_owner() != file2.get_owner():
       raise self.failureException(msg)
     if file1.get_group() != file2.get_group():
@@ -60,7 +58,6 @@ files:
   - test_name_1:
       source: app/test.txt
       destination: /opt/test.txt
-      requiresRestart: true
       access:
         owner: user1
         group: group1
@@ -68,19 +65,18 @@ files:
   - test_name_2:
       source: app/alt
       destination: /usr/share/alt
-      requiresRestart: false
       access:
         owner: user2
         group: group2
         mode: 777
 """
     expected_file_1 = FileCopyConfig("test_name_1",
-      {"source":"app/test.txt","destination":"/opt/test.txt","requiresRestart": True, "access":
+      {"source":"app/test.txt","destination":"/opt/test.txt", "access":
         {"owner":"user1","group":"group1","mode":640
         }
       })
     expected_file_2 = FileCopyConfig("test_name_2",
-      {"source":"app/alt","destination":"/usr/share/alt","requiresRestart": False, "access":
+      {"source":"app/alt","destination":"/usr/share/alt", "access":
         {"owner":"user2","group":"group2","mode":777
         }
       })

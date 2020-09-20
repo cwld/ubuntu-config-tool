@@ -7,7 +7,6 @@ class FileCopyConfig:
   FILE_ACCESS_MODE="mode"
   FILE_SRC="source"
   FILE_DEST="destination"
-  FILE_RESTART="requiresRestart"
 
   _mode = 0
   _owner = ""
@@ -15,13 +14,11 @@ class FileCopyConfig:
   _src = ""
   _dest = ""
   _name = ""
-  _requiresRestart = False
   
   def __init__(self, name, file_config):
     self._name=name
     self._src=file_config[self.FILE_SRC]
     self._dest=file_config[self.FILE_DEST]
-    self._requiresRestart=file_config[self.FILE_RESTART]
     self._owner=file_config[self.FILE_ACCESS_ROOT][self.FILE_ACCESS_OWNER]
     self._mode=file_config[self.FILE_ACCESS_ROOT][self.FILE_ACCESS_MODE]
     self._group=file_config[self.FILE_ACCESS_ROOT][self.FILE_ACCESS_GROUP]
@@ -34,9 +31,6 @@ class FileCopyConfig:
 
   def get_dest(self):
     return self._dest
-
-  def get_restart(self):
-    return self._requiresRestart
 
   def get_mode(self):
     return self._mode

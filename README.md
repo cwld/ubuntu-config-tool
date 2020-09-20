@@ -49,7 +49,6 @@ Package management is optional, and either install/remove can be specified or bo
 ### Files
 
 The files section in the configuration will indicate which files to copy. The files may be a path (folder) in which case the copy will be recursive, or can be single files.
-If the service needs to be restarted when files are updated, set `requiresRestart: true`, and this will indicate to the tool to force a restart of the service.
 All options must be specified for each file, and you must take care to ensure that paths are not duplicated as order is not guaranteed and files will be overwritten if existing.
 For example, if you wanted to overwrite the default nginx index file with your own in a local www directory and have it owned by www-data with read only permissions, your config would look like this:
 ```
@@ -58,7 +57,6 @@ files:
   - nginx-default-index:
       source: www/index.html
       destination: /usr/share/nginx/html
-      requiresRestart: false
       access:
         owner: www-data
         group: www-data
@@ -69,9 +67,8 @@ File copy is optional, omit this if not required, however if needed then all par
 
 ### Service
 
-This service section in the configuration indicates how the service is to be run and restarted. This should be an sh command that can be executed and returns within a reasonable (ie must control a daemonset).
-The start command should not restart the service if called when the service is running, and should simply return, as this will be called every time the config tool is run.
-The restart command will restart the service if any files marked as 'requiresRestart: true' are updated.
+This service section in the configuration indicates how the service is to be run and restarted. These commands should be shell command that can be executed and return within a reasonable (ie must control a daemonset).
+The restart command will restart the service if any files or packages are updated by this tool, otherwise the start command will be called to ensure the service is running.
 For example, if you wanted to launch nginx, your config would look like this:
 ```
 ...
